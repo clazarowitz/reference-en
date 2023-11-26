@@ -60,7 +60,13 @@ long randNumber;
 
 void setup() {
   Serial.begin(9600);
-  randomSeed(analogRead(0));
+  unsigned long seed=0;
+  for ( unsigned char i = 0; i < 32; i++ ) {
+    uint8_t temp = analogRead(0) & 0x01;
+    seed |= temp;
+    seed <<= 1;
+  }
+  randomSeed(seed);
 }
 
 void loop() {
